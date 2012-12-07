@@ -6,7 +6,7 @@ tagline: kre kre...
 {% include JB/setup %}
 
 Welcome to my GitHub pages. My primary blog can be found 
-at [kermit.epska.org](http://kermit.epksa.org). This site 
+at [kermit.epska.org](http://kermit.epska.org). This site 
 contains some of my notes which are easier to maintain 
 in Markdown.
 
