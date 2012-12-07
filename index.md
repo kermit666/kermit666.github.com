@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: kermit666's GitHub pages
+tagline: kre kre...
 ---
 {% include JB/setup %}
 
