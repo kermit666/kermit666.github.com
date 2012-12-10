@@ -643,7 +643,63 @@ https://bugs.launchpad.net/nova/+bug/1087353
 the loopback device isn't set up automatically after a restart
 
 
+Enabling live migrations
+=========================
 
+On the controller node:
+
+    sudo apt-get install nfs-server
+
+Export your instances folder for sharing by editing `/etc/exports` and adding a line
+
+    /var/lib/nova/instances *(rw,sync,fsid=0,no_root_squash)
+
+and restart the server
+
+    sudo service nfs-kernel-server restart
+    sudo service idmapd restart
+
+On the compute node:
+
+    sudo apt-get install nfs-client
+
+Edit `/etc/fstab` to mount the shared directory by adding (and a newline)
+
+    happy:/    /var/lib/nova/instances      nfs4    defaults    0   0
+
+And try mounting it
+
+    sudo mount -av
+
+Check if both the compute node and the controller have r/w enabled for the user nova
+
+    ls -ld /var/lib/nova/instances/ 
+
+On both machines:
+
+ - modify /etc/libvirt/libvirtd.conf
+
+    listen_tls = 0
+    listen_tcp = 1
+    auth_tcp = "none"
+
+ - modify /etc/init/libvirt-bin.conf
+
+    exec /usr/sbin/libvirtd -d -l
+
+ - modify /etc/init/libvirt-bin.conf
+
+    env libvirtd_opts="-d -l"
+ 
+ - modify  /etc/default/libvirt-bin
+
+    libvirtd_opts="-d -l"
+
+ - restart libvirt and check that it's working
+
+    sudo stop libvirt-bin && sudo start libvirt-bin
+    ps -ef | grep libvirt
+ 
 Folsom vs. Essex changes
 =========================
 
