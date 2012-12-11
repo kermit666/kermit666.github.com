@@ -642,6 +642,10 @@ https://bugs.launchpad.net/nova/+bug/1087353
 
 the loopback device isn't set up automatically after a restart
 
+    sudo losetup /dev/loop0 /home/kermit/virtual-volume.data
+    sudo vgdisplay
+    sudo start nova-volume
+
 
 Enabling live migrations
 =========================
@@ -695,10 +699,29 @@ On both machines:
 
     libvirtd_opts="-d -l"
 
- - restart libvirt and check that it's working
+ - restart libvirt (start/stop - a simple restart won't reflect the config change) 
+ and check that it's working
 
     sudo stop libvirt-bin && sudo start libvirt-bin
     ps -ef | grep libvirt
+
+ - check that libvirtd and KVM ports are open
+
+    sudo netstat -plant | grep "LISTEN"
+    sudo iptables -L
+
+- edit the nova.conf file
+
+    vncserver_listen=0.0.0.0
+
+    live_migration_bandwidth=0
+    live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER
+    live_migration_retry_count=30
+    live_migration_uri=qemu+tcp://%s/system
+
+ - maybe restart nova-compute
+
+    sudo restart nova-compute
  
 Folsom vs. Essex changes
 =========================
