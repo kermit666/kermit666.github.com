@@ -611,7 +611,12 @@ Install these Nova modules
 
     sudo apt-get install nova-compute nova-network nova-api
 
-Backup your old /etc/nova/nova.conf and place the controller's nova.conf there and check permissions (640 nova:nova)
+Backup your old /etc/nova/nova.conf and place the controller's nova.conf there. 
+Check permissions (640 nova:nova) and edit the following options
+
+    my_ip
+    vncserver_listen
+    vncserver_proxyclient_address
 
 (Re)start nova-api and nova-compute
 
@@ -669,7 +674,7 @@ On the compute node:
 
 Edit `/etc/fstab` to mount the shared directory by adding (and a newline)
 
-    happy:/    /var/lib/nova/instances      nfs4    defaults    0   0
+    happy:/    /var/lib/nova/instances      nfs4    defaults,nobootwait    0   0
 
 And try mounting it
 
@@ -686,10 +691,6 @@ On both machines:
     listen_tls = 0
     listen_tcp = 1
     auth_tcp = "none"
-
- - modify /etc/init/libvirt-bin.conf
-
-    exec /usr/sbin/libvirtd -d -l
 
  - modify /etc/init/libvirt-bin.conf
 
