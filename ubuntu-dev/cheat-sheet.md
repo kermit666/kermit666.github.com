@@ -1,3 +1,10 @@
+---
+layout: page
+title: "Ubuntu development cheat sheet"
+description: ""
+---
+{% include JB/setup %}
+
 Part I. Know your packages
 ==========================
 
