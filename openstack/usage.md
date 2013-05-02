@@ -22,7 +22,7 @@ Show available images, flavors, keys (your key should be in there too)
     nova flavor-list
     nova keypair-list
 
-Create a new instance based on this data
+Create a new instance based on this data (so you might have to replace `"Ubuntu 12.04 Precise server"`, `m1.tiny` and `userskey`)
 
     nova boot --image "Ubuntu 12.04 Precise server" --flavor m1.tiny --key_name userskey testinstance
 
