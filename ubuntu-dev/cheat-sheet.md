@@ -78,3 +78,19 @@ or
 Install the package
 
     dpkg -i ../package.deb
+
+References
+==========
+
+Ubuntu packaging guide
+
+ - [Fixing a bug](http://developer.ubuntu.com/packaging/html/fixing-a-bug-example.html)
+ - [Packaging new software](http://developer.ubuntu.com/packaging/html/packaging-new-software.html)
+
+Debian New Maintainers' Guide
+
+ - [Building the package](http://www.debian.org/doc/manuals/maint-guide/build.en.html)
+
+Manpages
+
+ - [deb-control](http://manpages.ubuntu.com/manpages/hardy/man5/deb-control.5.html)
