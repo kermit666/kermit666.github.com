@@ -54,3 +54,27 @@ Part II. Building packages
 You can build a package’s dependencies using apt-get’s build-dep subcommand
 
     sudo apt-get build-dep package
+
+Obtaining a package's source
+
+    bzr branch ubuntu:packagename
+
+or
+
+    bzr branch lp:projectname
+
+Building the package
+
+    bzr builddeb -- -S
+
+(`--` denotes that options to the builder follow, `-S` is to create only a source package)
+
+or
+
+    dpkg-buildpackage -S
+
+(omit `-S` to build a .deb file)
+
+Install the package
+
+    dpkg -i ../package.deb
