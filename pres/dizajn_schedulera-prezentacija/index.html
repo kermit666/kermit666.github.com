@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Presentation</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+
+		<!-- mathjax -->
+		<script
+		   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+		<!-- <style> -->
+		<!--   .mathbox { -->
+		<!--   border: 1px solid; -->
+		<!--   padding: 10px 20px; -->
+		<!--   margin: 0 auto; -->
+		<!--   width: 22em; -->
+		<!--   display: none; -->
+		<!--   } -->
+		<!-- </style> -->
+		<!-- <style id="initial_hide"> -->
+		<!--   .mathbox { -->
+		<!--   display: block; visibility: hidden; -->
+		<!--   height: 0; overflow: hidden; -->
+		<!--   padding: 0; margin: 0; border: none; -->
+		<!--   } -->
+		<!-- </style> -->
+
+		<!-- MathJax equations -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+		});
+		</script>
+
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+                      
+<section data-markdown data-separator="^---"  data-vertical="^--">> <!--class="mathbox">-->
+<script type="text/template">
+
+# Scheduler design
+
+---
+                         
+## General overview
+
+![overview](overview.png)
+
+---
+
+## Existing solution
+
+- Solved
+ + level of the VM
+ + migrations vs. RTEP/cooling
+ + 30% savings
+- TODO
+ + generalized scheduler
+
+---
+
+<!-- ## Existing solution -->
+
+![existing](geomigrations.png)
+
+--
+
+<!-- ## Solution extensions -->
+
+![extensions](scheduler.png)
+
+--
+
+![geomigrations+pandas](geomigrations+pandas.png)
+
+---
+
+### Use-case
+
+- geo-distributed IaaS cloud
+ + arbitray (and changing) number VMs, servers
+ + heterogeneous hardware and SLAs
+ + arbitrary forecasting horizon
+- data availability
+ + 78 cities in the USA
+ + real-time data (every 5 minutes) for a whole year [4]
+
+---
+
+### Cloud model
+
+- set of servers, set of VMs
+  + each server has a set $alloc$ of VMs it is hosting
+- set of $r$ resource types
+- resources defined through an r-tuple $spec$
+  + for every server (hardware capacity)
+  + and VM (resources requested through an SLA)
+- hard constraints
+  + every VM has to be allocated to a server
+  + a server's capacity cannot be exceeded
+- schedule
+  + current system state
+  + time series of migrations (VM, server to migrate to)
+- optimization goals
+  + minimize the schedule cost
+  + combined cooling and server electricity price
+---
+
+## Optimization
+
+- integer linear programming (ILP) problem
+- exact methods
+ + inefficient for larger problem instances
+ + many existing publications
+   - even among closely related work (Wierman, Guler)
+- heuristic methods
+ + faster convergence towards a satisfying solution [1]
+ + used in VM scheduling [2], but much less
+   - room for differentiation
+   - haven't found cases where future RTEP and temperature was considered
+
+---
+
+## Heuristic methods
+
+- multiple possibilities
+ - genetic algorithms
+ - ant colony optimization
+ - particle swarm optimization
+- *"both PSO and the GA obtain high quality solutions"* [3]
+- framework
+
+---
+
+## GA operators
+
+- Fitness function
+  + a weighted sum of constraints and costs (including migration overhead)
+  + minimize
+- crossover
+  + pick random moment $t_c$
+  + take migrations from one parent for $t<t_c$
+  + take migrations from the other parent for $t \geq t_c$
+- mutation
+  + change random migration
+
+---
+
+## Challenges
+
+- huge database of el. prices
+  + problematic to parse
+  + finding temperature data manually
+- NP hard scheduilng problem
+  + errors introduced by scheduling limitations interfering with migration overhead-benefit estimations on the machine-level
+
+---
+
+<!-- ### References -->
+
+1. F. Gao and J. P. Hayes, “Exact and Heuristic Approaches to Input Vector Control for Leakage Power Reduction,” IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, vol. 25, no. 11, pp. 2564–2571, 2006.
+2. J. Hu, J. Gu, G. Sun, and T. Zhao, “A Scheduling Strategy on Load Balancing of Virtual Machine Resources in Cloud Computing Environment,” in 2010 Third International Symposium on Parallel Architectures, Algorithms and Programming (PAAP), 2010, pp. 89–96.
+3. R. Hassan, B. Cohanim, O. De Weck, and G. Venter, “A comparison of particle swarm optimization and the genetic algorithm,” in Proceedings of the 1st AIAA multidisciplinary design optimization specialist conference, 2005.
+4. S. Alfeld, C. Barford, and P. Barford, “Toward an analytic framework for the electrical power grid,” in Proceedings of the 3rd International Conference on Future Energy Systems: Where Energy, Computing and Communication Meet, New York, NY, USA, 2012, pp. 9:1–9:4.
+
+
+</script>
+</section>
+
+<!--                          <section data-markdown="./content.md" data-separator="^\n\n\n" data-vertical="^\n\n"></section>-->
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: false,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		<!-- mathjax -->
+		<!-- var DynamicMJ = { -->
+		<!--   n: 3, -->
+		<!--   update: function () { -->
+		<!--     document.getElementById("eq"+this.n).style.display = "none"; -->
+		<!--     this.n++; if (this.n > 3) {this.n = 1} -->
+		<!--     document.getElementById("eq"+this.n).style.display = "block"; -->
+		<!--   } -->
+		<!-- }; -->
+		<!-- MathJax.Hub.Queue(function () { -->
+		<!--   document.getElementById("initial_hide").disabled = true; -->
+		<!-- }); -->
+
+		</script>
+
+	</body>
+</html>
