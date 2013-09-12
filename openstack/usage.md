@@ -5,8 +5,10 @@ description: ""
 ---
 {% include JB/setup %}
 
-Usage instructions for students
-================================
+Usage instructions for students.
+
+Creating an instance
+--------------------
 
 Connect to the physical server
 
@@ -16,7 +18,7 @@ Authenticate
 
     . openrc
 
-Show available images, flavors, keys (your key should be in there too)
+Show available images, flavors, keys (your key should be in there too). If you need to add an image and/or key manually, check the next section.
 
     nova image-list
     nova flavor-list
@@ -46,3 +48,36 @@ This will put your vm to sleep. You can later on resume it with
     nova resume testinstance
 
 The status of the machine is shown under `nova list`.
+
+Creating a keypair and an image
+-------------------------------
+This part might not be necessary. In case you do need to do it yourself,
+here are the instructions...
+
+### Keypair
+
+you create and add a keypair with
+
+    ssh-keygen -t rsa
+
+pick a password and choose the default location.
+
+    nova keypair-add --pub_key ~/.ssh/id_rsa.pub mykey
+
+### Image
+
+Download an Ubuntu server cloud image from the web - the URL of an exact image
+tends to change, so try browsing to it from
+[the main page](http://cloud-images.ubuntu.com/).
+
+    wget http://uec-images.ubuntu.com/releases/12.04.2/release/ubuntu-12.04.2-server-cloudimg-amd64-disk1.img
+
+and add it to the glance registry.
+
+    glance image-create --is-public true --disk-format qcow2 --container-format bare --name "precise" < ubuntu-12.04.2-server-cloudimg-amd64-disk1.img
+
+Test with
+
+    glance index
+
+That should be it.

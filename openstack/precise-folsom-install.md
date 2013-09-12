@@ -5,10 +5,7 @@ description: ""
 ---
 {% include JB/setup %}
 
-happy manual installation notes
-===============================
-
-These notes document my installation of OpenStack Folsom on two servers:
+These notes document my manual installation of OpenStack Folsom on two servers:
 
 - controller and compute node (happy)
 - compute node (doc)
@@ -287,10 +284,15 @@ Now try `keystone token-get` etc.
 Glance
 ---------
 Install
+
     sudo apt-get install glance
+
 Remove SQLite DB
+
     sudo rm /var/lib/glance/glance.sqlite
+
 Edit /etc/glance/glance-api.conf
+
     enable_v1_api=True
     enable_v2_api=True
 
@@ -306,6 +308,7 @@ Edit /etc/glance/glance-api.conf
     sql_connection = mysql://glancedbadmin:$our_pw@happy.infosys.tuwien.ac.at/glance
 
 Edit /etc/glance/glance-api-paste.ini
+
     [filter:authtoken]
     admin_tenant_name = service
     admin_user = glance
@@ -316,6 +319,7 @@ Restart glance-api to pick up these changed settings.
     sudo service glance-api restart
 
 Edit /etc/glance/glance-registry.conf
+
     [keystone_authtoken]
     admin_tenant_name = service
     admin_user = glance
@@ -633,7 +637,7 @@ Multinode works :)
 TODO
 -----
 
-2012-12-06 16:01:54 WARNING nova.common.deprecated [req-b395ec24-f6ac-493e-955a-d4fe6c501ecf None None] Deprecated Config: The root_helper option (which lets you specify a root wrapper different from nova-rootwrap, and defaults to using sudo) is now deprecated. You should use the rootwrap_config option instead.
+    2012-12-06 16:01:54 WARNING nova.common.deprecated [req-b395ec24-f6ac-493e-955a-d4fe6c501ecf None None] Deprecated Config: The root_helper option (which lets you specify a root wrapper different from nova-rootwrap, and defaults to using sudo) is now deprecated. You should use the rootwrap_config option instead.
 
 
 In a Cirros image:
