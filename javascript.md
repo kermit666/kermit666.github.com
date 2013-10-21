@@ -74,6 +74,33 @@ Older JS versions will simply ignore it.
 
 Objects
 -------
+Three ways to create objects:
+
+1. Object literal    
+2. Constructor
+3. Object.create() *(only in ECMAScript 5)*
+
+For example:
+
+    gromit = {animal:'dog', colar:true, owner:{name:"Wallace", 'likes':'cheese'}, 42:'meaning of life'};
+
+    var Dog = function(colar){
+        this.animal = 'dog';
+        this.colar = colar;
+        return this;
+    };
+    gromit = new Dog(true);
+
+    Object.create({animal:'dog'});
+
+The `Object.create` static method creates a new object that inherits the properties from the argument,
+the argument is the newly created object's prototype.
+
+Object properties can then be accessed using `object.property` where property is the property object's
+name or using square brackets `object[property]` where property is an expression that can be evaluated
+to a string.
+
+### Prototypes
 
 [jsref]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 [statements]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements
