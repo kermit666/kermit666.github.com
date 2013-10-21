@@ -37,13 +37,36 @@ Function declaration statement or function declaration expression.
 Nested functions where the inner function accesses the outer function's
 variables.
 
-[jsref]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 
-Loops
------
-The for-in loop iterates over properties of an object and as a special case
-this also works for arrays.
+Statements
+----------
+A nice [summary][statements] is given on MDN.
+
+### Loops
+The for-in loop "enumerates object properties" - it iterates over properties
+of an object and as a special case this also works for arrays.
 
     a = [1, 2, 3]
     for (el in a)
         console.log(a)
+
+### Labels
+Similarly to gotos in C, labels can be added to any command in JS. Commands that
+can jump to these labels are:
+
+ - break
+ - continue
+
+### With
+Deprecated. Unlike Python's with, in JS it simply brings an expression into
+scope - equivalent to `from bla import *`.
+
+### Strict mode
+It throws errors and forbids bad things more rigorously. You should use it. 
+
+    "use strict"
+
+Older JS versions will simply ignore it.
+
+[jsref]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+[statements]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements
