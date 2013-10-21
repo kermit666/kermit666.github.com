@@ -7,7 +7,7 @@ published: false
 
 {% include JB/setup %}
 
-1. Introduction
+I. Introduction
 ===============
 Being a long-time Python user, I started learning Javascript and decided to make some notes along the way to more easily memorize the similarities and the differences. Here they are...
 
@@ -20,7 +20,7 @@ Mostly C-like syntax - think curly braces, semicolons etc.
 
 You get the picture. [Language reference][jsref] at MDN.
 
-2. Javascript itself
+II. Javascript itself
 =====================
 Language-specific details.
 
