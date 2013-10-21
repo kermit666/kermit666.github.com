@@ -1,23 +1,27 @@
 ---
 layout: page
-title: "Javascript for Pythonistas"
-description: "Notes while learning Javascript"
+title: Javascript for Pythonistas
+description: Notes while learning Javascript
+published: false
 ---
+
 {% include JB/setup %}
 
-Introduction
-============
+1. Introduction
+===============
+Being a long-time Python user, I started learning Javascript and decided to make some notes along the way to more easily memorize the similarities and the differences. Here they are...
+
 Mostly C-like syntax - think curly braces, semicolons etc.
 
     var a = [1, 2, 3];
-    for (var i=0; i<a.length; i++){
+    for (var i = 0; i < a.length; i++){
         console.log(a[i]);
     }
 
 You get the picture. [Language reference][jsref] at MDN.
 
-Javascript itself
-=================
+2. Javascript itself
+=====================
 Language-specific details.
 
 Hoisting
@@ -51,7 +55,7 @@ of an object and as a special case this also works for arrays.
         console.log(a)
 
 ### Labels
-Similarly to gotos in C, labels can be added to any command in JS. Commands that
+Similarly to GOTOs in C, labels can be added to any command in JS. Commands that
 can jump to these labels are:
 
  - break
@@ -67,6 +71,9 @@ It throws errors and forbids bad things more rigorously. You should use it.
     "use strict"
 
 Older JS versions will simply ignore it.
+
+Objects
+-------
 
 [jsref]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 [statements]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements
