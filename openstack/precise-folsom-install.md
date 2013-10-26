@@ -5,7 +5,10 @@ description: ""
 ---
 {% include JB/setup %}
 
-These notes document my manual installation of OpenStack Folsom on two servers:
+happy manual installation notes
+===============================
+
+These notes document my installation of OpenStack Folsom on two servers:
 
 - controller and compute node (happy)
 - compute node (doc)
@@ -695,6 +698,10 @@ On both machines:
     listen_tls = 0
     listen_tcp = 1
     auth_tcp = "none"
+
+ - modify /etc/init/libvirt-bin.conf
+
+    exec /usr/sbin/libvirtd -d -l
 
  - modify /etc/init/libvirt-bin.conf
 
